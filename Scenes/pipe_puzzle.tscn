@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpgcyxvqaaca2"]
+
+[ext_resource type="Script" uid="uid://dhti1pvbcji5v" path="res://Scripts/menu.gd" id="1_1p65e"]
+[ext_resource type="Texture2D" uid="uid://clp8ag7ej3cy7" path="res://Images/powered.jpg" id="2_oeidp"]
+[ext_resource type="Texture2D" uid="uid://6q0g4k578nkr" path="res://Images/unpowered.jpg" id="3_1nwgu"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1p65e")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 5
+
+[node name="Powered_Img" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 151.0
+offset_top = 24.0
+offset_right = 261.0
+offset_bottom = 134.0
+texture = ExtResource("2_oeidp")
+
+[node name="Unpowered_Img" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 881.0
+offset_top = 24.0
+offset_right = 991.0
+offset_bottom = 134.0
+texture = ExtResource("3_1nwgu")
