@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cebsn8n4uvoab"]
+
+[ext_resource type="Script" uid="uid://b0c284d0x6hly" path="res://Character/Player/player.gd" id="1_3c51y"]
+[ext_resource type="Script" uid="uid://cd8cfoifptibm" path="res://Character/Player/limbo_hsm.gd" id="2_2brrg"]
+
+[node name="RepairMan" type="CharacterBody3D"]
+script = ExtResource("1_3c51y")
+limbo_player = NodePath("LimboHSM")
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+update_mode = 2
+script = ExtResource("2_2brrg")
