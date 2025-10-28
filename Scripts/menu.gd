@@ -70,6 +70,7 @@ func generate_pipe_texture() -> PipeTexture:
 	var func1:= func():
 		if goal_pipe.lit_up():
 			unpowered_img.texture = load("res://Images/powered.jpg") as Texture2D
+			add_child(TimerKit.generate_timer(0.8, func(): queue_free()))
 	pipe_text.btn.pressed.connect(func1)
 	return pipe_text
 
@@ -111,9 +112,11 @@ func generate_solution(ridx:int = 0, crow:int = starting_pipe, init:bool = false
 	if !init:
 		match(crow):
 			top_idx:
-				crow = [crow, crow+1].pick_random()
+				if !get_specific_neighbor(cur_pipe, Pipes.pipe_pos[Pipes.bottom]).pipe.powered: crow = [crow, crow+1].pick_random()
+				else: crow = crow
 			bottom_idx:
-				crow = [crow, crow-1].pick_random()
+				if !get_specific_neighbor(cur_pipe, Pipes.pipe_pos[Pipes.top]).pipe.powered: crow = [crow, crow-1].pick_random()
+				else: crow = crow
 			_:
 				crow = [crow, crow+1, crow-1].pick_random()
 	if init: crow += starting_dir
@@ -152,6 +155,11 @@ func get_pipe_coordinate_neighbor(pip:PipeTexture) -> Dictionary[int, PipeTextur
 	for i in neg.keys():
 		neg_dict.get_or_add(Pipes.pipe_string.find_key(i), pipe_grid_container.get_children()[neg[i]])
 	return neg_dict
+
+func get_specific_neighbor(pip:PipeTexture, pos:Vector2) -> PipeTexture:
+	var cur_idx:int = pipe_grid_container.get_children().find(pip)
+	var neg_idx:int = GridKit.get_neighbor_idx(rows, cols, cur_idx, pos)
+	return pipe_grid_container.get_children()[neg_idx]
 
 func reroute(pip:PipeTexture):
 	if !pip.pipe.powered: return

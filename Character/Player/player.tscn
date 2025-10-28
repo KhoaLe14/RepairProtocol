@@ -1,12 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://cebsn8n4uvoab"]
+[gd_scene load_steps=6 format=3 uid="uid://cebsn8n4uvoab"]
 
 [ext_resource type="Script" uid="uid://b0c284d0x6hly" path="res://Character/Player/player.gd" id="1_3c51y"]
 [ext_resource type="Script" uid="uid://cd8cfoifptibm" path="res://Character/Player/limbo_hsm.gd" id="2_2brrg"]
+[ext_resource type="PackedScene" uid="uid://drdx0bj6kg3n0" path="res://Scenes/cube.tscn" id="3_2h1g1"]
+[ext_resource type="Script" uid="uid://lj5gpwv8jvmw" path="res://Character/Player/States/ground_default.gd" id="3_7t67c"]
 
-[node name="RepairMan" type="CharacterBody3D"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7t67c"]
+points = PackedVector3Array(-0.5, -1, -0.5, -0.5, -1, 0.5, -0.5, 1, -0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, -0.5, 1, 0.5, 0.5, 1, -0.5, 0.5, 1, 0.5)
+
+[node name="RepairMan" type="CharacterBody3D" node_paths=PackedStringArray("ani")]
+collision_layer = 2
 script = ExtResource("1_3c51y")
+ani = NodePath("Cube/AnimationPlayer")
 limbo_player = NodePath("LimboHSM")
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
 update_mode = 2
 script = ExtResource("2_2brrg")
+
+[node name="GroundDefault" type="LimboState" parent="LimboHSM"]
+script = ExtResource("3_7t67c")
+
+[node name="Cube" parent="." instance=ExtResource("3_2h1g1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_7t67c")
+
+[editable path="Cube"]

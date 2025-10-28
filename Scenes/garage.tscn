@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyt32vw3xbjyx"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sdivo"]
+size = Vector2(40, 40)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0nu3q"]
+points = PackedVector3Array(-20, 0, -20, -20, 0, 20, 20, 0, -20, 20, 0, 20)
+
+[node name="Garage" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_sdivo")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_0nu3q")

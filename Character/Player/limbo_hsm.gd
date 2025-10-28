@@ -4,4 +4,4 @@ class_name CLimboHSM
 var character:Character
 
 func _ready() -> void:
-	set_active(false)
+	character = get_parent()

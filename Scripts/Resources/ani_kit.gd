@@ -1,10 +1,10 @@
 extends Resource
 class_name AniKit
 
-static var p_idle:StringName = ""
-static var p_walk:StringName = ""
-static var p_run:StringName = ""
-static var p_hold:StringName = ""
+@export var ani_name:StringName
+@export var blend:float = -1
+@export var speed:float = 1
+@export var from_end:bool = false
 
-static func play(ani:AnimationPlayer, ani_name:StringName, blend:float = -1, speed:float = 1, from_end:bool = false):
+func play(ani:AnimationPlayer):
 	ani.play(ani_name, blend, speed, from_end)
