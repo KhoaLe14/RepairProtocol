@@ -1,4 +1,4 @@
-extends Control
+extends UIPuzzle
 
 const cols:int = 5
 const rows:int = 5
@@ -70,7 +70,7 @@ func generate_pipe_texture() -> PipeTexture:
 	var func1:= func():
 		if goal_pipe.lit_up():
 			unpowered_img.texture = load("res://Images/powered.jpg") as Texture2D
-			add_child(TimerKit.generate_timer(0.8, func(): queue_free()))
+			complete.emit()
 	pipe_text.btn.pressed.connect(func1)
 	return pipe_text
 

@@ -22,6 +22,12 @@ static func retrieve_xor(_bool1:bool, _bool2:bool, returns:bool):
 		if _bool2 == returns: return _bool2
 	return null
 
+static func switch(_bool1:bool, _bool2:bool, watch:bool):
+	if _bool1 != watch:
+		_bool2 = true
+		return true
+	else: return false
+
 static func infect(arr:Array[bool], _bool:bool):
 	for i in arr.size(): arr[i] = _bool
 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d05a6rjfpacei"]
+
+[ext_resource type="PackedScene" uid="uid://cpgcyxvqaaca2" path="res://Scenes/pipe_puzzle.tscn" id="2_gmguv"]
+
+[node name="PipePuzz" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Control" parent="." instance=ExtResource("2_gmguv")]

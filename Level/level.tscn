@@ -1,0 +1,115 @@
+[gd_scene load_steps=20 format=3 uid="uid://kcd4vy0cuttn"]
+
+[ext_resource type="PackedScene" uid="uid://5bybde5xq8dg" path="res://Character/player_controller.tscn" id="1_o6mkr"]
+[ext_resource type="Script" uid="uid://dt0tmw6s7on5b" path="res://Scripts/garage.gd" id="1_wqlfs"]
+[ext_resource type="Shader" uid="uid://kimc5meeodlx" path="res://shader/sky_shader_level2.gdshader" id="2_nk1il"]
+[ext_resource type="PackedScene" uid="uid://c2ebkvnab70xa" path="res://Level/garage.tscn" id="2_qmtf6"]
+[ext_resource type="Script" uid="uid://c6flvunv6pmk1" path="res://Level/spot_light_3d.gd" id="3_uawph"]
+[ext_resource type="PackedScene" uid="uid://d4lkp273v3aas" path="res://Level/ground_for_repair_protocol.tscn" id="4_52x1o"]
+[ext_resource type="PackedScene" uid="uid://bpe7q4ma1dl8p" path="res://modelScene/light_pillar.tscn" id="7_d6qko"]
+[ext_resource type="Shader" uid="uid://viqy3uwh6ns7" path="res://shader/PixelShader.gdshader" id="8_22cqp"]
+[ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://Scene/WaterPlane.tscn" id="9_wqlfs"]
+[ext_resource type="PackedScene" uid="uid://ya3wrhlra5vn" path="res://Scenes/power_cell.tscn" id="10_py82k"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yfk6w"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6mkr"]
+size = Vector3(19.5471, 1, 19.4685)
+
+[sub_resource type="Gradient" id="Gradient_22cqp"]
+colors = PackedColorArray(0.774773, 0.649, 0.590895, 1, 0.778301, 0.645821, 0.547871, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wqlfs"]
+gradient = SubResource("Gradient_22cqp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_22cqp"]
+shader = ExtResource("2_nk1il")
+shader_parameter/skyColor = Color(0.825918, 0.654398, 0.662876, 1)
+shader_parameter/horizonColor = Color(0.569346, 0.926332, 0.954325, 1)
+shader_parameter/skyTexture = SubResource("GradientTexture1D_wqlfs")
+
+[sub_resource type="Sky" id="Sky_wqlfs"]
+sky_material = SubResource("ShaderMaterial_22cqp")
+
+[sub_resource type="Environment" id="Environment_qmtf6"]
+background_mode = 2
+sky = SubResource("Sky_wqlfs")
+ambient_light_color = Color(0.0728426, 0.0728426, 0.0728426, 1)
+ambient_light_energy = 2.35
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1
+volumetric_fog_length = 4.66
+volumetric_fog_detail_spread = 1.41421
+volumetric_fog_ambient_inject = 0.37
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wqlfs"]
+render_priority = 0
+shader = ExtResource("8_22cqp")
+
+[sub_resource type="QuadMesh" id="QuadMesh_py82k"]
+material = SubResource("ShaderMaterial_wqlfs")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_wqlfs")
+player = NodePath("Player_Controller")
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19073, 0, 0)
+mesh = SubResource("BoxMesh_yfk6w")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0658417, 0, 0.285767)
+shape = SubResource("BoxShape3D_o6mkr")
+
+[node name="Player_Controller" parent="." instance=ExtResource("1_o6mkr")]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, 0, 2.76513, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1.00005, 0, 0, 0, 0.178999, 0.983896, 0, -0.983896, 0.178999, 0, 2.15799, 0)
+light_color = Color(0.830335, 0.830335, 0.830335, 1)
+light_energy = 0.29
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qmtf6")
+
+[node name="Garage" parent="." instance=ExtResource("2_qmtf6")]
+transform = Transform3D(0.515, 0, 0, 0, 0.587, 0, 0, 0, 0.515, 0.354358, 0.101501, -3.23053)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 15.591, 6.554, -11.15)
+light_energy = 3.747
+spot_range = 9.50574
+spot_angle = 39.9014
+script = ExtResource("3_uawph")
+
+[node name="GroundForRepairProtocol" parent="." instance=ExtResource("4_52x1o")]
+transform = Transform3D(22.6061, 0, -1.94995, 0, 22.69, 0, 1.94995, 0, 22.6061, -25.0167, -1.46654, -26.6154)
+
+[node name="LightPillar" parent="." instance=ExtResource("7_d6qko")]
+transform = Transform3D(1.56, 0, 0, 0, 1.56, 0, 0, 0, 1.56, 13.0464, -0.630462, -11.1498)
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.28952, 6.22469, 1.05038)
+light_energy = 3.753
+spot_range = 10.651
+spot_angle = 65.0
+
+[node name="Shader" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -74.588, 0)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_py82k")
+
+[node name="Water" parent="." instance=ExtResource("9_wqlfs")]
+transform = Transform3D(2.525, 0, 0, 0, 2.525, 0, 0, 0, 2.525, 41.1381, -9.54264, 0)
+
+[node name="PowerCell" parent="." instance=ExtResource("10_py82k")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 2, 3, -8)

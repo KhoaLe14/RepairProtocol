@@ -72,7 +72,7 @@ static func generate_pipe(_dir:int = 0) -> Pipes:
 
 func pipe_rotate():
 	dir = BitKit.bit_shift(dir, true, 1, 4)
-	print(get_string_dir())
+	#print(get_string_dir())
 
 func is_pipe_connected(pos:int, pip:Pipes) -> bool:
 	#print("Pos: %s, Pipe pos: %s, Connect pipe pos: %s, Connect dir: %s"%[pos, get_string_dir(), pip.get_string_dir(), pipe_string[BitKit.bit_shift(pos, true, 4, 8)]])

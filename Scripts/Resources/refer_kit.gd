@@ -29,3 +29,6 @@ static func retrieve(flag:String) -> Variant:
 static func flow(variable:Variant, within:Array, to:Array) -> Variant:
 	if within.size() > to.size(): return null
 	return to[within.find(variable)]
+
+static func find_type(arr:Array, class_type:StringName):
+	return arr.filter(func(x): return x.get_class() == class_type)[0]

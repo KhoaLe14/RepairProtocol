@@ -1,0 +1,56 @@
+extends Node
+
+var game_state_watcher:int = 0:
+	set(val):
+		if val != game_state_watcher: game_state_changed.emit(val)
+		game_state_watcher = val
+signal game_state_changed(_int:int)
+signal action_ended
+signal hand_swapped
+var cargo:Array
+var right_hand:Node3D
+var carry:Node3D
+var player:Player
+var player_ani_remaining_dur:float
+
+func _ready() -> void:
+	GState.play()
+	Inventory.inv_init()
+	Inventory.add_item(Tool.new(ItemNames.hammer))
+	Inventory.add_item(Tool.new(ItemNames.wrench))
+
+func _process(delta: float) -> void:
+	game_state_watcher = GState.game_state
+	update_game_state()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		if GState.is_playing(): GState.pause()
+		else: GState.play()
+	
+	if event.is_action_pressed("slot1"):
+		HotBar.select_item(0)
+		hand_swapped.emit()
+	if event.is_action_pressed("slot2"):
+		HotBar.select_item(1)
+		hand_swapped.emit()
+	if event.is_action_pressed("slot3"):
+		HotBar.select_item(2)
+		hand_swapped.emit()
+	if event.is_action_pressed("slot4"):
+		HotBar.select_item(3)
+		hand_swapped.emit()
+	if event.is_action_pressed("slot5"):
+		HotBar.select_item(4)
+		hand_swapped.emit()
+
+func update_game_state():
+	match GState.game_state:
+		GState.gstate_enum.PLAYING:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		GState.gstate_enum.INSPECTING:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		_:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+#func check_hand(idx:int): if HotBar.active_slot == idx: Ho

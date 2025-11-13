@@ -1,7 +1,7 @@
 extends Resource
 class_name TimerKit
 
-static func generate_timer(duration, funcs:Callable, oneshot = true):
+static func generate_timer(duration, funcs:Callable, oneshot = true) -> Timer:
 	var tim:Timer = Timer.new()
 	tim.timeout.connect(funcs)
 	if oneshot: tim.timeout.connect(func(): tim.queue_free())
@@ -15,3 +15,10 @@ static func echo_timer(duration:float, interval:float, funcs:Callable, node:Node
 	var tim = generate_timer(interval, funcs)
 	node.add_child(tim)
 	tim.timeout.connect(func(): echo_timer(duration - interval, interval, funcs, node))
+
+static func delta_timer(duration:float, delta:float, funcs:Callable, node:Node):
+	var tim:Timer = generate_timer(delta, funcs, false)
+	var func1:= func(): tim.queue_free()
+	var stop:Timer = generate_timer(duration, func1)
+	node.add_child(stop)
+	node.add_child(tim)
