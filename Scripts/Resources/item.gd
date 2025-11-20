@@ -8,6 +8,8 @@ var max_stack:int = 1:
 var quantity:int = 1:
 	set(val): quantity = clampi(val, 0, max_stack)
 
+var manifest_path:StringName = ""
+
 func _init(_item_name:StringName = "", _stackable:bool = false, _max_stack:int = 1, _quantity:int = 1) -> void:
 	item_name = _item_name
 	stackable = _stackable

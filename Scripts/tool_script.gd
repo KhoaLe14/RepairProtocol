@@ -7,5 +7,5 @@ const RIGHT = 2
 const BOTTOM = 1
 
 func _run() -> void:
-	print(MathKit.stretch(0.6, 2))
-	var meh: AnimationNodeBlendTree
+	var ship:Vehicle = Vehicle.new()
+	print(ship.tasks)

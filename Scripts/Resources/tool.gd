@@ -1,5 +1,8 @@
 extends Item
 class_name Tool
 
-func _init(_item_name:StringName = "", _stackable:bool = false, _max_stack:int = 1, _quantity:int = 1) -> void:
+var packed_scene:PackedScene
+
+func _init(_item_name:StringName = "", p_scene:PackedScene = null) -> void:
 	super(_item_name, false)
+	packed_scene = p_scene

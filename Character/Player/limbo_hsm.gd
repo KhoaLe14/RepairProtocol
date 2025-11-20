@@ -25,4 +25,3 @@ func _update(delta: float) -> void:
 	if !Watcher.cargo.is_empty() && Watcher.cargo[0] is String: interact_action = Watcher.cargo[0]
 	is_holding = HotBar.active_idx != -1
 	tool_hit = (character as Player).hit && HotBar.active_idx >= 0
-	#print(tool_hit)

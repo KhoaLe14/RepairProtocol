@@ -1,13 +1,12 @@
 extends Node3D
+class_name Laptop
 
-var opened:bool = false:
-	set(val):
-		run = true
-		opened = val
-var run:bool = false:
-	set(val):
-		run = val
-		if run: run = false
+signal opened_sig
+signal closed_sig
+
+var opened:bool = false
+var run:bool = false
+
 ## Used for checking if the mouse is inside the Area3D.
 #var is_mouse_inside = false
 ## The last processed input touch/mouse event. To calculate relative movement.
@@ -19,7 +18,17 @@ var run:bool = false:
 #@onready var node_quad = $SciFiDeck/Case_Upper/Quad
 #@onready var node_area = $SciFiDeck/Screen/Area3D
 #
-#func _ready():
+func _ready():
+	$InteractArea.interacted.connect(func():
+		$InteractArea.on_cd = true
+		add_child(TimerKit.generate_timer(AniTimes.open_case_full, func(): $InteractArea.on_cd = false))
+		opened = !opened
+		($AnimationTree.get("parameters/playback") as AnimationNodeStateMachinePlayback).travel("Start")
+		$AnimationTree.set("parameters/conditions/open", opened)
+		$AnimationTree.set("parameters/conditions/close", !opened)
+		if opened: opened_sig.emit()
+		else: closed_sig.emit()
+		)
 	#node_area.mouse_entered.connect(_mouse_entered_area)
 	#node_area.mouse_exited.connect(_mouse_exited_area)
 	#node_area.input_event.connect(_mouse_input_event)

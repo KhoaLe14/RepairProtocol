@@ -4,7 +4,7 @@ class_name UIPuzzle
 signal complete
 var task:Task
 
-func _init(_task:Task = Task.new()) -> void:
+func _init(_task:Task = Task.short_task()) -> void:
 	visible = false
 	task = _task
 

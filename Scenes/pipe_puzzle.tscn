@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cpgcyxvqaaca2"]
 
-[ext_resource type="Script" uid="uid://dhti1pvbcji5v" path="res://Scripts/menu.gd" id="1_1p65e"]
+[ext_resource type="Script" uid="uid://dhti1pvbcji5v" path="res://Scripts/pipe_puzzle.gd" id="1_1p65e"]
 [ext_resource type="Texture2D" uid="uid://clp8ag7ej3cy7" path="res://Images/powered.jpg" id="2_oeidp"]
 [ext_resource type="Texture2D" uid="uid://6q0g4k578nkr" path="res://Images/unpowered.jpg" id="3_1nwgu"]
 

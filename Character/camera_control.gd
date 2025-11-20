@@ -3,7 +3,7 @@ extends Node3D
 
 #@onready var camera: Camera3D = $Camera3D
 #@onready var aim_target: Marker3D = $Camera3D/AimTarget
-@onready var arm_ik: SkeletonIK3D = $"../RepairEmployeeVer2/rig_001/Skeleton3D/armIK"
+@onready var arm_ik: SkeletonIK3D = $"../RepairEmployeeVer3/rig_001/Skeleton3D/armIK"
 
 #var player_controller: Player
 var input_rotation: Vector3

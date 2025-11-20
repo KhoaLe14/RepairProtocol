@@ -1,15 +1,19 @@
 extends GroundState
 
+var duration:float = 1
+
 func _enter() -> void:
 	super()
-	#var duration:float = 1
-	#await assign_duration(duration)
-	#print(duration)
-	#add_child(TimerKit.generate_timer(duration, func():
-		#character.hit = false
-		#dispatch_default()))
+	duration = assign_duration()
+	print(duration)
 
-func assign_duration(dur:float) -> float:
-	if limbo.tool_hit: dur = AniTimes.time_from_name[limbo.tool_action]
-	elif limbo.interact: dur = AniTimes.time_from_name[limbo.interact_action]
+func _update(delta: float) -> void:
+	if duration <= 0:
+		character.hit = false
+		dispatch_default()
+	duration -= delta
+
+func assign_duration() -> float:
+	if limbo.tool_hit: return AniTimes.time_from_name[limbo.tool_action]
+	elif limbo.interact: return AniTimes.time_from_name[limbo.interact_action]
 	return 1

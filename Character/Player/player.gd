@@ -11,8 +11,8 @@ var hit:bool = false
 #var og_player:Array[Vector3] = []
 #var op_cam:Array[Vector3] = []
 @export var neck:Node3D
-@onready var arm_ik: SkeletonIK3D = $RepairEmployeeVer2/rig_001/Skeleton3D/armIK
-@onready var holding_bone: BoneAttachment3D = $RepairEmployeeVer2/rig_001/Skeleton3D/BoneAttachment3D
+@onready var arm_ik: SkeletonIK3D = $RepairEmployeeVer3/rig_001/Skeleton3D/armIK
+@onready var holding_bone: BoneAttachment3D = $RepairEmployeeVer3/rig_001/Skeleton3D/HandBone
 @onready var carry_marker: Marker3D = $Neck/CarryMarker
 @onready var arm_marker: Marker3D = $Neck/FPSCam/ArmMarker
 
@@ -21,7 +21,7 @@ func _ready() -> void:
 	super()
 	Watcher.player = self
 	Watcher.carry = carry_marker
-	Watcher.right_hand = $RepairEmployeeVer2/rig_001/Skeleton3D/BoneAttachment3D
+	Watcher.right_hand = holding_bone
 	#Watcher.action_ended.connect(func(): hit = false)
 	#rot_offset = rotation - fps_cam.rotation
 	#pos_offset = position - fps_cam.position
@@ -53,10 +53,10 @@ func _input(event: InputEvent) -> void:
 		GState.play()
 	if event.is_action_pressed("interact") && display_pointer():
 		var ia:InteractArea = look_ray.get_collider()
-		ia.interacted.emit()
+		if !ia.on_cd: ia.interacted.emit()
 	if event.is_action_pressed("mouse1") && GState.is_playing():
 		hit = true
-	if event.is_action_released("mouse1") && GState.is_playing():
+	if event.is_action_released("mouse1"):
 		hit = false
 
 func movement_input():

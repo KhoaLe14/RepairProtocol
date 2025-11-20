@@ -1,10 +1,11 @@
-[gd_scene load_steps=72 format=4 uid="uid://cr0f1nnopyk3m"]
+[gd_scene load_steps=71 format=4 uid="uid://cr0f1nnopyk3m"]
 
 [ext_resource type="Script" uid="uid://3h4ibsx1dysw" path="res://UI/ComputerUI/computer.gd" id="1_kofcl"]
 [ext_resource type="Texture2D" uid="uid://bv2vs8vqlsp34" path="res://model/Tool/AnotherSciFiDeck/SciFiDeck_ImphenziaPalette01-256-Gradient.png" id="2_5itn1"]
 [ext_resource type="Texture2D" uid="uid://wkt1mvic0he3" path="res://picture/damn.jpg" id="3_01f0o"]
 [ext_resource type="Shader" uid="uid://cql2vj0ke04gt" path="res://UI/ComputerUI/crt_shader.gdshader" id="4_wte0m"]
 [ext_resource type="Script" uid="uid://nciaopmu405w" path="res://UI/ComputerUI/computer_cam_test.gd" id="5_wte0m"]
+[ext_resource type="PackedScene" uid="uid://d2wo1gs8a4kxt" path="res://Scenes/interact_area.tscn" id="6_w1dn7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byyxi"]
 resource_name = "Material.001"
@@ -662,17 +663,6 @@ shader_parameter/vignette_opacity = 0.607
 
 [sub_resource type="Theme" id="Theme_wte0m"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wte0m"]
-
-[sub_resource type="Sky" id="Sky_w1dn7"]
-sky_material = SubResource("ProceduralSkyMaterial_wte0m")
-
-[sub_resource type="Environment" id="Environment_onbur"]
-background_mode = 2
-background_energy_multiplier = 2.35
-sky = SubResource("Sky_w1dn7")
-ambient_light_source = 3
-
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_u30nr"]
 filter_enabled = true
 filters = ["Anten"]
@@ -779,7 +769,7 @@ node_connections = [&"output", 0, &"Add2 3", &"Add2", 0, &"Animation", &"Add2", 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bf62h"]
 advance_mode = 2
-advance_expression = "!opened && run"
+advance_condition = &"open"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ejdqw"]
 switch_mode = 2
@@ -791,7 +781,7 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ir7xq"]
 advance_mode = 2
-advance_expression = "opened && run"
+advance_condition = &"close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k5d0c"]
 switch_mode = 2
@@ -815,15 +805,18 @@ states/Start/position = Vector2(548, 174)
 transitions = ["Start", "CubeAction_001", SubResource("AnimationNodeStateMachineTransition_bf62h"), "CubeAction_001", "Forward", SubResource("AnimationNodeStateMachineTransition_ejdqw"), "Forward", "End", SubResource("AnimationNodeStateMachineTransition_wte0m"), "Start", "Backward", SubResource("AnimationNodeStateMachineTransition_ir7xq"), "Backward", "CubeAction_001 2", SubResource("AnimationNodeStateMachineTransition_k5d0c"), "CubeAction_001 2", "End", SubResource("AnimationNodeStateMachineTransition_x8qio")]
 graph_offset = Vector2(0, -84.576164)
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_onbur"]
+size = Vector3(1.0717773, 0.38624573, 1.1943359)
+
+[node name="Laptop" type="Node3D"]
+script = ExtResource("1_kofcl")
 
 [node name="Computer" type="Node3D" parent="."]
-script = ExtResource("1_kofcl")
 
 [node name="SciFiDeck" type="Node3D" parent="Computer"]
 
 [node name="Case_Upper" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(-2.5482295e-08, -0.220371, 0, 0.582967, -9.632722e-09, 0, 0, 0, 0.65041, -0.651967, 0, 0.349532)
+transform = Transform3D(0.582967, 0, 0, 0, 0.220371, 0, 0, 0, 0.65041, -0.651967, 0, 0.349532)
 mesh = SubResource("ArrayMesh_i10oe")
 skeleton = NodePath("")
 
@@ -838,7 +831,7 @@ mesh = SubResource("ArrayMesh_2whxu")
 skeleton = NodePath("")
 
 [node name="Screen" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(-2.5482295e-08, -0.220371, 0, 0.582967, -9.632722e-09, 0, 0, 0, 0.65041, -0.651967, 0, 0.349532)
+transform = Transform3D(0.582967, 0, 0, 0, 0.220371, 0, 0, 0, 0.65041, -0.651967, 0, 0.349532)
 mesh = SubResource("ArrayMesh_w1dn7")
 skeleton = NodePath("")
 
@@ -863,7 +856,7 @@ mesh = SubResource("ArrayMesh_owbn5")
 skeleton = NodePath("")
 
 [node name="Cube" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(0.00869316, 0.030933637, 0, -0.003494599, 0.07695047, 0, 0, 0, 0.0388376, 0.536567, -0.107699, 0.409225)
+transform = Transform3D(0.009369271, 0, 0, 0, 0.0829353, 0, 0, 0, 0.0388376, 0.536567, -0.107699, 0.409225)
 mesh = SubResource("ArrayMesh_tsn88")
 skeleton = NodePath("")
 
@@ -878,7 +871,7 @@ mesh = SubResource("ArrayMesh_pg0e4")
 skeleton = NodePath("")
 
 [node name="Anten" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(-0.008008671, -0.026670868, 0, 0.38965362, -0.00054817455, 0, 0, 0, 0.0135184, -0.389419, -0.093308, -0.662624)
+transform = Transform3D(0.3897359, 0, 0, 0, 0.0266765, 0, 0, 0, 0.0135184, -0.389419, -0.093308, -0.662624)
 mesh = SubResource("ArrayMesh_5e24e")
 skeleton = NodePath("")
 
@@ -945,14 +938,13 @@ theme = SubResource("Theme_wte0m")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.195553, 0.687362, 0)
 script = ExtResource("5_wte0m")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_onbur")
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../Computer/SciFiDeck")
 tree_root = SubResource("AnimationNodeStateMachine_cgell")
-advance_expression_base_node = NodePath("../Computer")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../Computer/SciFiDeck/AnimationPlayer")
+parameters/conditions/close = false
+parameters/conditions/open = false
 parameters/Backward/Add2/add_amount = 1.0
 "parameters/Backward/Add2 2/add_amount" = 1.0
 parameters/Backward/TimeScale/scale = 0.0
@@ -961,3 +953,9 @@ parameters/Forward/Add2/add_amount = 1.0
 "parameters/Forward/Add2 2/add_amount" = 1.0
 "parameters/Forward/Add2 3/add_amount" = 1.0
 parameters/Forward/TimeScale/scale = 0.0
+
+[node name="InteractArea" parent="." instance=ExtResource("6_w1dn7")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.035888672, -0.038734436, 0.0034179688)
+shape = SubResource("BoxShape3D_onbur")

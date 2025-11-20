@@ -6,18 +6,26 @@ var game_state_watcher:int = 0:
 		game_state_watcher = val
 signal game_state_changed(_int:int)
 signal action_ended
-signal hand_swapped
+signal hand_swapped(_item:Item)
 var cargo:Array
 var right_hand:Node3D
 var carry:Node3D
 var player:Player
 var player_ani_remaining_dur:float
+var tool_nodes:Array[Node] = []
 
 func _ready() -> void:
 	GState.play()
 	Inventory.inv_init()
-	Inventory.add_item(Tool.new(ItemNames.hammer))
-	Inventory.add_item(Tool.new(ItemNames.wrench))
+	Inventory.add_item(Tool.new(ItemNames.hammer, load("res://Scenes/hammer_t_est.tscn")))
+	#Inventory.add_item(Tool.new(ItemNames.wrench))
+	hand_swapped.connect(func(item:Item):
+		if item is Tool:
+			var item_node:Node = (item as Tool).packed_scene.instantiate()
+			right_hand.add_child(item_node)
+			tool_nodes.append(item_node)
+		else: tool_cache()
+		)
 
 func _process(delta: float) -> void:
 	game_state_watcher = GState.game_state
@@ -53,4 +61,8 @@ func update_game_state():
 		_:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-#func check_hand(idx:int): if HotBar.active_slot == idx: Ho
+func tool_cache():
+	for i in tool_nodes:
+		i.queue_free()
+		tool_nodes.erase(i)
+	#print("tool cache called", tool_nodes)
