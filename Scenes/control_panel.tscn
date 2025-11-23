@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://duljflehr7512"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1pmly"]
+color = Color(0.79607844, 0, 0, 1)
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_84xqn"]
+color = Color(0, 1, 1, 1)
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_af86p"]
+color = Color(0, 1, 1, 1)
+thickness = 5
+
+[node name="ControlPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(600, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_1pmly")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_84xqn")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_af86p")
+tick_count = 6
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="HSlider2" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+step = 20.0
+tick_count = 6
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="HSlider3" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+step = 20.0
+tick_count = 6
+ticks_on_borders = true
+ticks_position = 3

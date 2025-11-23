@@ -10,7 +10,7 @@ func _ready() -> void:
 func extract():
 	#$SnapPoint.snap(Watcher.player, Watcher.player.neck, true)
 	#await $SnapPoint.snapped
-	Watcher.cargo = ["take_powercell_short_full"]
+	Watcher.cargo = ["ExtractPowerCell"]
 	Watcher.player.hit = true
 	Watcher.player.hand_snap($MovingPart/Marker.global_transform)
 	var tim:Timer = TimerKit.generate_timer(AniTimes.take_powercell_start, func(): return)

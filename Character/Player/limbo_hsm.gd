@@ -12,6 +12,7 @@ var interact:bool = false
 var tool_hit:bool = false
 var tool_action:StringName = ""
 var interact_action:StringName = ""
+@onready var ani_tree: AnimationTree = $"../AnimationTree"
 
 func _ready() -> void:
 	character = get_parent()

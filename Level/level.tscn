@@ -54,9 +54,8 @@ material = SubResource("ShaderMaterial_wqlfs")
 flip_faces = true
 size = Vector2(2, 2)
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("player")]
+[node name="Level" type="Node3D"]
 script = ExtResource("1_wqlfs")
-player = NodePath("Player_Controller")
 
 [node name="Geometry" type="Node3D" parent="."]
 

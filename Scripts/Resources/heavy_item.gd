@@ -9,7 +9,7 @@ var is_holding:bool = false:
 	set(val):
 		if val && !is_holding:
 			scale = Vector3(1, 1, 1)*0.5
-			HotBar.select_item(-2)
+			HotBar.select(-2)
 		is_holding = val
 var disabled:bool = true:
 	set(val):

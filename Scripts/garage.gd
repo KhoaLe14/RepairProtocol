@@ -1,8 +1,6 @@
 extends Level
 
-@export var player:Player
+#@export var player:Player
 
-func _ready() -> void:
-	var ship:Vehicle = Vehicle.new()
-	print(ship.tasks)
+#func _ready() -> void:
 	#snap_point1.snapped.connect(func(): GState.game_state = GState.playing)

@@ -16,15 +16,13 @@ var tool_nodes:Array[Node] = []
 
 func _ready() -> void:
 	GState.play()
-	Inventory.inv_init()
-	Inventory.add_item(Tool.new(ItemNames.hammer, load("res://Scenes/hammer_t_est.tscn")))
 	#Inventory.add_item(Tool.new(ItemNames.wrench))
 	hand_swapped.connect(func(item:Item):
+		tool_cache()
 		if item is Tool:
 			var item_node:Node = (item as Tool).packed_scene.instantiate()
 			right_hand.add_child(item_node)
 			tool_nodes.append(item_node)
-		else: tool_cache()
 		)
 
 func _process(delta: float) -> void:
@@ -37,19 +35,19 @@ func _input(event: InputEvent) -> void:
 		else: GState.play()
 	
 	if event.is_action_pressed("slot1"):
-		HotBar.select_item(0)
+		HotBar.select(0)
 		hand_swapped.emit()
 	if event.is_action_pressed("slot2"):
-		HotBar.select_item(1)
+		HotBar.select(1)
 		hand_swapped.emit()
 	if event.is_action_pressed("slot3"):
-		HotBar.select_item(2)
+		HotBar.select(2)
 		hand_swapped.emit()
 	if event.is_action_pressed("slot4"):
-		HotBar.select_item(3)
+		HotBar.select(3)
 		hand_swapped.emit()
 	if event.is_action_pressed("slot5"):
-		HotBar.select_item(4)
+		HotBar.select(4)
 		hand_swapped.emit()
 
 func update_game_state():

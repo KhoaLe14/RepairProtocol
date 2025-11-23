@@ -1,7 +1,7 @@
 extends Item
 class_name Tool
 
-var packed_scene:PackedScene
+@export var packed_scene:PackedScene
 
 func _init(_item_name:StringName = "", p_scene:PackedScene = null) -> void:
 	super(_item_name, false)

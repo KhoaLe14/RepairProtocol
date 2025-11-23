@@ -15,10 +15,11 @@ var hit:bool = false
 @onready var holding_bone: BoneAttachment3D = $RepairEmployeeVer3/rig_001/Skeleton3D/HandBone
 @onready var carry_marker: Marker3D = $Neck/CarryMarker
 @onready var arm_marker: Marker3D = $Neck/FPSCam/ArmMarker
-
+@export var inventory:Storage
 
 func _ready() -> void:
 	super()
+	HotBar.populate_hot_bar(inventory)
 	Watcher.player = self
 	Watcher.carry = carry_marker
 	Watcher.right_hand = holding_bone
@@ -36,6 +37,7 @@ func _process(delta: float) -> void:
 	fps_cam.process_mode = ReferKit.flow(GState.game_state, [GState.gstate_enum.INSPECTING, GState.gstate_enum.PLAYING], [Node.PROCESS_MODE_DISABLED, Node.PROCESS_MODE_INHERIT])
 	global_rotation.y = neck.global_rotation.y
 	$AnimationTree.set("parameters/Movement/blend_position", input_dir)
+	$Control/ControlPanel.visible = GState.is_paused()
 	#print(neck.global_position)
 
 func _physics_process(delta: float) -> void:

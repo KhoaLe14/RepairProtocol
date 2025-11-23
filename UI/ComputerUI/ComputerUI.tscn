@@ -902,9 +902,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 2
 
 [node name="TextureRect" type="TextureRect" parent="Computer/SubViewport/Control/TabContainer"]
+visible = false
 modulate = Color(0.375377, 0.626426, 0.238241, 1)
 layout_mode = 2
 texture = ExtResource("3_01f0o")
@@ -918,7 +919,6 @@ texture = ExtResource("3_01f0o")
 metadata/_tab_index = 1
 
 [node name="TextureRect3" type="TextureRect" parent="Computer/SubViewport/Control/TabContainer"]
-visible = false
 layout_mode = 2
 texture = ExtResource("3_01f0o")
 metadata/_tab_index = 2

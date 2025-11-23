@@ -7,4 +7,5 @@ class_name AniKit
 @export var from_end:bool = false
 
 func play(ani:AnimationPlayer):
+	if ani_name == "": return
 	ani.play(ani_name, blend, speed, from_end)

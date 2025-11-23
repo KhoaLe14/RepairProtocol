@@ -10,7 +10,7 @@ func _ready() -> void:
 
 func set_tasks(damaged:float):
 	var rand_arr:Array[Task] = []
-	if damaged >= Task.short(): rand_arr.append(Task.short_task())
+	rand_arr.append(Task.short_task())
 	if damaged >= Task.medium(): rand_arr.append(Task.medium_task())
 	if damaged >= Task.long(): rand_arr.append(Task.long_task())
 	var add_task:Task = rand_arr.pick_random()
