@@ -36,11 +36,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	fps_cam.process_mode = ReferKit.flow(GState.game_state, [GState.gstate_enum.INSPECTING, GState.gstate_enum.PLAYING], [Node.PROCESS_MODE_DISABLED, Node.PROCESS_MODE_INHERIT])
 	global_rotation.y = neck.global_rotation.y
-	$AnimationTree.set("parameters/Movement/blend_position", input_dir)
-	$Control/ControlPanel.visible = GState.is_paused()
 	#print(neck.global_position)
 
 func _physics_process(delta: float) -> void:
+	$AnimationTree.set("parameters/Movement/blend_position", input_dir)
 	display_pointer()
 	movement_input()
 	dir = velocity.normalized()
@@ -50,9 +49,9 @@ func _physics_process(delta: float) -> void:
 	#print("Cam: pos: %s  rot: %s"%[fps_cam.position - op_cam[0], fps_cam.rotation - op_cam[1]])
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") && GState.is_inspecting():
-		fps_cam.current = true
-		GState.play()
+	#if event.is_action_pressed("ui_cancel") && !GState.is_playing():
+		#fps_cam.current = true
+		#GState.play()
 	if event.is_action_pressed("interact") && display_pointer():
 		var ia:InteractArea = look_ray.get_collider()
 		if !ia.on_cd: ia.interacted.emit()
@@ -60,20 +59,26 @@ func _input(event: InputEvent) -> void:
 		hit = true
 	if event.is_action_released("mouse1"):
 		hit = false
+	if event.is_action_pressed("tab"):
+		if GState.is_playing(): GState.check()
+		elif GState.is_checking(): GState.play()
 
 func movement_input():
 	if !GState.is_playing():
 		input_dir = Vector2.ZERO
+		velocity = Vector3.ZERO
 		return
-	if Input.is_action_just_pressed("ui_left"): input_dir.x -= 1
-	if Input.is_action_just_pressed("ui_right"): input_dir.x += 1
-	if Input.is_action_just_pressed("ui_up"): input_dir.y += 1
-	if Input.is_action_just_pressed("ui_down"): input_dir.y -= 1
 	
-	if Input.is_action_just_released("ui_left"): input_dir.x += 1
-	if Input.is_action_just_released("ui_right"): input_dir.x -= 1
-	if Input.is_action_just_released("ui_up"): input_dir.y -= 1
-	if Input.is_action_just_released("ui_down"): input_dir.y += 1
+	input_dir = Input.get_vector("move_left", "move_right", "move_down", "move_up")
+	#if Input.is_action_just_pressed("ui_left"): input_dir.x -= 1
+	#if Input.is_action_just_pressed("ui_right"): input_dir.x += 1
+	#if Input.is_action_just_pressed("ui_up"): input_dir.y += 1
+	#if Input.is_action_just_pressed("ui_down"): input_dir.y -= 1
+	#
+	#if Input.is_action_just_released("ui_left"): input_dir.x += 1
+	#if Input.is_action_just_released("ui_right"): input_dir.x -= 1
+	#if Input.is_action_just_released("ui_up"): input_dir.y -= 1
+	#if Input.is_action_just_released("ui_down"): input_dir.y += 1
 	
 	var move_dir = (fps_cam.get_forward() * input_dir.y + fps_cam.get_right() * input_dir.x).normalized()
 	#print(move_dir)

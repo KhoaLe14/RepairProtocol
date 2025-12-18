@@ -14,7 +14,7 @@ var task:Task
 #signal denied
 
 func _ready() -> void:
-	task = Task.new()
+	task = Task.new("", 0)
 	task.task_name = "Open the dooor."
 	#lever.interacted.connect(func(on:bool): open = on)
 	og_y = global_position.y

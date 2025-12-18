@@ -693,25 +693,25 @@ play_mode = 1
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_cgell"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xvt7h"]
-graph_offset = Vector2(-717.8357, -35.56199)
-nodes/output/position = Vector2(760, 160)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_ejdqw")
-nodes/Animation/position = Vector2(-440, 60)
-"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_bf62h")
-"nodes/Animation 4/position" = Vector2(-440, 840)
-"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_04fpr")
-"nodes/Animation 3/position" = Vector2(-440, 580)
+graph_offset = Vector2(-717.836, -35.562)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_5t43o")
 nodes/Add2/position = Vector2(300, 180)
 "nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_u30nr")
 "nodes/Add2 2/position" = Vector2(520, 140)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_4u0au")
-"nodes/Animation 2/position" = Vector2(-440, 320)
-nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_cgell")
-nodes/TimeScale/position = Vector2(-160, 280)
 "nodes/Add2 3/node" = SubResource("AnimationNodeAdd2_t8k10")
 "nodes/Add2 3/position" = Vector2(60, 220)
-node_connections = [&"output", 0, &"Add2 2", &"Add2", 0, &"Add2 3", &"Add2", 1, &"Animation 3", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"Animation 4", &"TimeScale", 0, &"Animation 2", &"Add2 3", 0, &"Animation", &"Add2 3", 1, &"TimeScale"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_ejdqw")
+nodes/Animation/position = Vector2(-440, 60)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_4u0au")
+"nodes/Animation 2/position" = Vector2(-440, 320)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_04fpr")
+"nodes/Animation 3/position" = Vector2(-440, 580)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_bf62h")
+"nodes/Animation 4/position" = Vector2(-440, 840)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_cgell")
+nodes/TimeScale/position = Vector2(-160, 280)
+nodes/output/position = Vector2(760, 160)
+node_connections = [&"Add2", 0, &"Add2 3", &"Add2", 1, &"Animation 3", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"Animation 4", &"Add2 3", 0, &"Animation", &"Add2 3", 1, &"TimeScale", &"TimeScale", 0, &"Animation 2", &"output", 0, &"Add2 2"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_exem2"]
 animation = &"CubeAction_001"
@@ -747,25 +747,25 @@ animation = &"Case_UpperAction"
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_4u0au"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_04fpr"]
-graph_offset = Vector2(-377.7204, -144.57924)
-nodes/output/position = Vector2(380, -60)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_b0a3h")
-nodes/Animation/position = Vector2(-580, 60)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_u30nr")
-"nodes/Animation 2/position" = Vector2(-580, 320)
+graph_offset = Vector2(-377.72, -144.579)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_onbur")
 nodes/Add2/position = Vector2(-300, 20)
 "nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_wte0m")
 "nodes/Add2 2/position" = Vector2(-60, 0)
-"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_t8k10")
-"nodes/Animation 3/position" = Vector2(-580, 580)
 "nodes/Add2 3/node" = SubResource("AnimationNodeAdd2_w1dn7")
 "nodes/Add2 3/position" = Vector2(160, -80)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_b0a3h")
+nodes/Animation/position = Vector2(-580, 60)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_u30nr")
+"nodes/Animation 2/position" = Vector2(-580, 320)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_t8k10")
+"nodes/Animation 3/position" = Vector2(-580, 580)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_5t43o")
 "nodes/Animation 4/position" = Vector2(-580, 840)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_4u0au")
 nodes/TimeScale/position = Vector2(-300, 800)
-node_connections = [&"output", 0, &"Add2 3", &"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"Animation 3", &"Add2 3", 0, &"TimeScale", &"Add2 3", 1, &"Add2 2", &"TimeScale", 0, &"Animation 4"]
+nodes/output/position = Vector2(380, -60)
+node_connections = [&"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"Animation 3", &"Add2 3", 0, &"TimeScale", &"Add2 3", 1, &"Add2 2", &"TimeScale", 0, &"Animation 4", &"output", 0, &"Add2 3"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bf62h"]
 advance_mode = 2
@@ -803,10 +803,10 @@ states/Forward/node = SubResource("AnimationNodeBlendTree_04fpr")
 states/Forward/position = Vector2(348, -57)
 states/Start/position = Vector2(548, 174)
 transitions = ["Start", "CubeAction_001", SubResource("AnimationNodeStateMachineTransition_bf62h"), "CubeAction_001", "Forward", SubResource("AnimationNodeStateMachineTransition_ejdqw"), "Forward", "End", SubResource("AnimationNodeStateMachineTransition_wte0m"), "Start", "Backward", SubResource("AnimationNodeStateMachineTransition_ir7xq"), "Backward", "CubeAction_001 2", SubResource("AnimationNodeStateMachineTransition_k5d0c"), "CubeAction_001 2", "End", SubResource("AnimationNodeStateMachineTransition_x8qio")]
-graph_offset = Vector2(0, -84.576164)
+graph_offset = Vector2(0, -84.5762)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_onbur"]
-size = Vector3(1.0717773, 0.38624573, 1.1943359)
+size = Vector3(1.07178, 0.386246, 1.19434)
 
 [node name="Laptop" type="Node3D"]
 script = ExtResource("1_kofcl")
@@ -856,7 +856,7 @@ mesh = SubResource("ArrayMesh_owbn5")
 skeleton = NodePath("")
 
 [node name="Cube" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(0.009369271, 0, 0, 0, 0.0829353, 0, 0, 0, 0.0388376, 0.536567, -0.107699, 0.409225)
+transform = Transform3D(0.00936927, 0, 0, 0, 0.0829353, 0, 0, 0, 0.0388376, 0.536567, -0.107699, 0.409225)
 mesh = SubResource("ArrayMesh_tsn88")
 skeleton = NodePath("")
 
@@ -866,12 +866,12 @@ mesh = SubResource("ArrayMesh_toop8")
 skeleton = NodePath("")
 
 [node name="Connect_Case_001" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(0.015201712, 0, 0, 0, 0.0318671, 0, 0, 0, 0.0340029, -0.651967, -0.00376105, 0.349532)
+transform = Transform3D(0.0152017, 0, 0, 0, 0.0318671, 0, 0, 0, 0.0340029, -0.651967, -0.00376105, 0.349532)
 mesh = SubResource("ArrayMesh_pg0e4")
 skeleton = NodePath("")
 
 [node name="Anten" type="MeshInstance3D" parent="Computer/SciFiDeck"]
-transform = Transform3D(0.3897359, 0, 0, 0, 0.0266765, 0, 0, 0, 0.0135184, -0.389419, -0.093308, -0.662624)
+transform = Transform3D(0.389736, 0, 0, 0, 0.0266765, 0, 0, 0, 0.0135184, -0.389419, -0.093308, -0.662624)
 mesh = SubResource("ArrayMesh_5e24e")
 skeleton = NodePath("")
 
@@ -947,8 +947,8 @@ parameters/conditions/close = false
 parameters/conditions/open = false
 parameters/Backward/Add2/add_amount = 1.0
 "parameters/Backward/Add2 2/add_amount" = 1.0
-parameters/Backward/TimeScale/scale = 0.0
 "parameters/Backward/Add2 3/add_amount" = 1.0
+parameters/Backward/TimeScale/scale = 0.0
 parameters/Forward/Add2/add_amount = 1.0
 "parameters/Forward/Add2 2/add_amount" = 1.0
 "parameters/Forward/Add2 3/add_amount" = 1.0
@@ -957,5 +957,5 @@ parameters/Forward/TimeScale/scale = 0.0
 [node name="InteractArea" parent="." instance=ExtResource("6_w1dn7")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.035888672, -0.038734436, 0.0034179688)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358887, -0.0387344, 0.00341797)
 shape = SubResource("BoxShape3D_onbur")

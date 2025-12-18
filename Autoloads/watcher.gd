@@ -13,6 +13,9 @@ var carry:Node3D
 var player:Player
 var player_ani_remaining_dur:float
 var tool_nodes:Array[Node] = []
+var current_ship:Vehicle
+var ship_in_queue:Array[Vehicle]
+var level:Level
 
 func _ready() -> void:
 	GState.play()
@@ -64,3 +67,6 @@ func tool_cache():
 		i.queue_free()
 		tool_nodes.erase(i)
 	#print("tool cache called", tool_nodes)
+
+func start_game():
+	pass

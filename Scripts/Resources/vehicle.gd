@@ -5,7 +5,7 @@ var status:float = 1
 var tasks:Array[Task] = []
 
 func _ready() -> void:
-	status -= randf_range(0.3, 0.9)
+	status -= randf_range(0.3, 0.8)
 	set_tasks(1-status)
 
 func set_tasks(damaged:float):

@@ -11,6 +11,8 @@ extends Vehicle
 @export var state_machine_name:Array[StringName]
 @export var ias:Array[InteractArea]
 
+var thrusters: Array[MeshInstance3D] = []
+
 func _ready() -> void:
 	super()
 	for i:int in one_shot_name.size():
@@ -18,7 +20,16 @@ func _ready() -> void:
 			if ias[i].flip: open_door(one_shot_name[i])
 			else: close_door(state_machine_name[i])
 			)
+	var found_nodes = find_children("*", "MeshInstance3D", true, false)
+	
+	for node in found_nodes:
+		if node.name.to_lower().contains("thruster"):
+			thrusters.append(node)
+			node.visible = false
+	
+	
 	print(tasks.map(func(x): return x.weight))
+	print(status)
 
 func open_door(_one_shot:StringName):
 	ani_tree.set("parameters/Others/%s/request"%[_one_shot], AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

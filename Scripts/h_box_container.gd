@@ -1,8 +1,8 @@
 extends HBoxContainer
 
 func _process(delta: float) -> void:
-	visible = !GState.is_solving()
-	draw_hands()
+	visible = GState.is_playing()
+	if visible: draw_hands()
 
 func draw_hands():
 	for i in HotBar.hands:

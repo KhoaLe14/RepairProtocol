@@ -12,15 +12,15 @@ func _input(event: InputEvent) -> void:
 		else: GState.play()
 	
 	if event.is_action_pressed("slot1"):
-		HotBar.select_item(0)
+		HotBar.select(0)
 	if event.is_action_pressed("slot2"):
-		HotBar.select_item(1)
+		HotBar.select(1)
 	if event.is_action_pressed("slot3"):
-		HotBar.select_item(2)
+		HotBar.select(2)
 	if event.is_action_pressed("slot4"):
-		HotBar.select_item(3)
+		HotBar.select(3)
 	if event.is_action_pressed("slot5"):
-		HotBar.select_item(4)
+		HotBar.select(4)
 
 func _ready() -> void:
 	Inventory.inv_init()

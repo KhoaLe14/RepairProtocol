@@ -61,3 +61,30 @@ static func get_coordinate(cols:int, rows:int, arr:Array, arr_element:Variant) -
 
 static func get_coordinateidx(cols:int, rows:int, idx:int) -> Vector2:
 	return Vector2(idx/rows, idx%cols)
+
+static func get_manhattan_distance(_pos1:Vector2i, _pos2:Vector2i) -> int:
+	return absi(_pos1.x - _pos2.x) + absi(_pos1.y - _pos2.y)
+
+static func get_grid_pos(idx: int, grid_size: Vector2i) -> Vector2i:
+	#var rows := grid_size.x
+	var cols := grid_size.y
+	var row := idx / cols
+	var col := idx % cols
+	return Vector2i(row, col)
+
+static func get_arr_index(pos: Vector2i, grid_size: Vector2i) -> int:
+	#var rows := grid_size.x
+	var cols := grid_size.y
+	return pos.x * cols + pos.y
+
+static func get_ring(_grid:Array, _col:int) -> Array:
+	if _grid.size() <= 0: var _grid2 = _grid.duplicate(); _grid2.clear(); return _grid2
+	var _row = _grid.size()/_col
+	var is_edge:Callable = func(idx:int) -> bool:
+		var x = idx % _col
+		var y = idx / _col
+		return (y == 0 || y == _row-1) || (x == 0 || x == _col-1)
+	var return_grid:Array = []
+	for i in _grid.size():
+		if is_edge.call(i): return_grid.append(_grid[i])
+	return return_grid
