@@ -26,6 +26,16 @@ func ran_gen():
 	dir = [left, up, right, down].pick_random()
 	if MathKit.chance_trigger(0.5): dir = [left, up, right, down].filter(func(x): return x != dir).pick_random()
 
+static func ran_dir_gen() -> Direction:
+	var _dir:Direction = Direction.new()
+	_dir.ran_gen()
+	return _dir
+
+static func spe_dir_gen(_int:int) -> Direction:
+	var _dir:Direction = Direction.new()
+	_dir.dir = _int
+	return _dir
+
 func set_dir(a):
 	dir = a
 	dir_arr = dir_arr.map(func(x): x = false; return x)

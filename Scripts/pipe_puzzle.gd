@@ -10,7 +10,7 @@ var fuel:int = 2
 @export var grid_size:Vector2i = Vector2i(5, 5)
 @export var cell_size:Vector2 = Vector2(64, 64)
 #var grid:Array[Point2]
-var grid:Array[Array] #[grid_position, is_check_point, direction, is_head, is_traveled]
+var grid:Array[Array] #[grid_position, is_check_point, direction, is_head, is_traveled, p_line]
 var grid_dict:Dictionary[Vector2i, Array]
 const p_pos = 0
 const p_checkpoint = 1#bool
@@ -19,14 +19,13 @@ const p_head = 3#bool
 const p_traveled = 4#bool
 const p_line = 5#direction
 var draw_queue:Array = []
+var prev_point:Array
 
 func _ready() -> void:
 	grid_container.columns = grid_size.y
 	grid_gen()
 	await grid_ui_gen()
 	grid_ui_update()
-	for i in grid: print(i.map(func(x): return x if x is not Direction else x.dir_arr))
-	#for i in grid_container.get_children(): print(i.get_child(1).get_child(0).name)
 
 func grid_gen():
 	grid.clear()
@@ -40,7 +39,14 @@ func grid_gen():
 				_point.append(_dir)
 			else:
 				_point.append_array([false, null])
-			_point.append_array([false, false])
+			_point.append_array([false, false, null])
+			
+			if grid.is_empty():
+				var line_dir = Direction.new();
+				line_dir.ran_gen()
+				_point[p_line] = line_dir
+				_point[p_head] = true
+				_point[p_traveled] = true
 			
 			grid.append(_point)
 			grid_dict.get_or_add(_point[p_pos], _point)
@@ -65,6 +71,67 @@ func grid_ui_gen():
 	for i in grid:
 		var _control:MouseControl = MouseControl.new()
 		set_size_.call(_control, cell_size)
+		_control.pressed.connect(func(a):
+			if i[p_head]:
+				can_draw = true
+				draw_queue.append(_control)
+			)
+		_control.released.connect(func(a):
+			can_draw = false
+			var i2 = draw_queue.pop_back()
+			var point2 = cell_to_point(i2)
+			while i2 && !point2[p_checkpoint]:
+				point2[p_head] = false
+				point2[p_line] = null
+				i2 = draw_queue.pop_back()
+				point2 = cell_to_point(i2)
+				point2[p_head] = true
+				fuel += 1
+			if !draw_queue.is_empty(): cell_to_point(draw_queue[-1])[p_head] = true
+			draw_queue.clear()
+			grid_ui_update()
+			)
+		_control.mouse_entered.connect(func():
+			if fuel > 0 && can_draw && !draw_queue.has(_control):
+				fuel -= 1
+				var last_point = cell_to_point(draw_queue[-1])
+				var cur_point = cell_to_point(_control)
+				var dir:Vector2i = cur_point[p_pos] - last_point[p_pos]
+				if cur_point[p_checkpoint]: fuel += 2
+				last_point[p_head] = false
+				cur_point[p_head] = true
+				draw_queue.append(_control)
+				match dir:
+					Vector2i(0, -1):#left
+						if !last_point[p_line]:
+							last_point[p_line] = Direction.spe_dir_gen(Direction.left)
+						else: last_point[p_line].dir |= Direction.left
+						if !cur_point[p_line]:
+							cur_point[p_line] = Direction.spe_dir_gen(Direction.right)
+						else: cur_point[p_line].dir |= Direction.right
+					Vector2i(-1, 0):#up
+						if !last_point[p_line]:
+							last_point[p_line] = Direction.spe_dir_gen(Direction.up)
+						else: last_point[p_line].dir |= Direction.up
+						if !cur_point[p_line]:
+							cur_point[p_line] = Direction.spe_dir_gen(Direction.down)
+						else: cur_point[p_line].dir |= Direction.down
+					Vector2i(0, 1):#right
+						if !last_point[p_line]:
+							last_point[p_line] = Direction.spe_dir_gen(Direction.right)
+						else: last_point[p_line].dir |= Direction.right
+						if !cur_point[p_line]:
+							cur_point[p_line] = Direction.spe_dir_gen(Direction.left)
+						else: cur_point[p_line].dir |= Direction.left
+					Vector2i(1, 0):#down
+						if !last_point[p_line]:
+							last_point[p_line] = Direction.spe_dir_gen(Direction.down)
+						else: last_point[p_line].dir |= Direction.down
+						if !cur_point[p_line]:
+							cur_point[p_line] = Direction.spe_dir_gen(Direction.up)
+						else: cur_point[p_line].dir |= Direction.up
+				grid_ui_update()
+			)
 		
 		var _panel:PanelContainer = PanelContainer.new()
 		serialize_cell.call(_panel)
@@ -121,13 +188,16 @@ func grid_ui_update():
 	for i:int in grid.size():
 		var j = grid[i]
 		if j[p_checkpoint]:
-			grid_childs[i].get_child(3).get_child(0).visible = !j[3] && !j[4]
-			grid_childs[i].get_child(3).get_child(1).visible = j[3] || j[4]
+			grid_childs[i].get_child(3).get_child(0).visible = !j[p_traveled] && !j[p_head] && !j[p_line]
+			grid_childs[i].get_child(3).get_child(1).visible = j[p_traveled] || j[p_head] || j[p_line]
 			for l in j[p_route].dir_arr.size():
 				grid_childs[i].get_child(1).get_child(l).visible = j[p_route].dir_arr[l]
 		if j[p_line]:
 			for l in j[p_line].dir_arr.size():
-				grid_childs[i].get_child(2).get_child(l).visible = j[p_route].dir_arr[l]
+				grid_childs[i].get_child(2).get_child(l).visible = j[p_line].dir_arr[l]
+		else:
+			for l in grid_childs[i].get_child(2).get_children().size():
+				grid_childs[i].get_child(2).get_child(l).visible = false
 
 func draw_power_line():
 	pass
@@ -135,3 +205,7 @@ func draw_power_line():
 func grid_snap() -> Vector2i:
 	var local = grid_container.get_local_mouse_position().clamp(Vector2.ZERO, grid_container.size)
 	return local/cell_size
+
+func cell_to_point(_con:Control):
+	var index = grid_container.get_children().find(_con)
+	return grid[index]
